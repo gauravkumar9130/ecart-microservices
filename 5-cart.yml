@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart
+  labels:
+    app: cart
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cart
+  template:
+    metadata:
+      labels:
+        app: cart
+    spec:
+      containers:
+      - name: app
+        image: quay.io/gauravkumar9130/ecart-microservices:cart
+        env:
+        - name: MYSQL_DB_HOST
+          value: db
+        - name: MYSQL_DB_PASSWORD
+          value: test
+        ports:
+        - containerPort: 5003
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart
+  labels:
+    app: cart
+spec:
+  ports:
+  - port: 5003
+    targetPort: 5003
+    protocol: TCP
+  selector:
+    app: cart
+

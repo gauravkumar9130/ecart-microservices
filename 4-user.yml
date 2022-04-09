@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  labels:
+    app: user
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+      - name: app
+        image: quay.io/gauravkumar9130/ecart-microservices:user
+        env:
+        - name: MYSQL_DB_HOST
+          value: db
+        - name: MYSQL_DB_PASSWORD
+          value: test
+        ports:
+        - containerPort: 5002
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+  labels:
+    app: user
+spec:
+  ports:
+  - port: 5002
+    targetPort: 5002
+    protocol: TCP
+  selector:
+    app: user
+
