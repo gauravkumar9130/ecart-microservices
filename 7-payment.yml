@@ -18,6 +18,7 @@ spec:
       containers:
       - name: app
         image: quay.io/gauravkumar9130/ecart-microservices:payment
+        imagePullPolicy: Always
         env:
         - name: MYSQL_DB_HOST
           value: db
@@ -31,7 +32,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app
+  name: payment
   labels:
     app: payment
 spec:

@@ -19,17 +19,10 @@ spec:
           emptyDir: {}
         - name: demo
           emptyDir: {}
-      initContainers:
-      - image: busybox
-        name: init-db
-        volumeMounts:
-        - name: demo
-          mountPath: /tmp/data
-        command: ["/bin/sh", "-c", "wget https://raw.githubusercontent.com/cloudyuga/e-cart/monolith/sqldump/data/db.sql -O /tmp/data/db.sql"]
-
       containers:
       - name: ecart-db
-        image: mariadb
+        image: quay.io/gauravkumar9130/ecart-microservices:db
+        imagePullPolicy: Always
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: test
